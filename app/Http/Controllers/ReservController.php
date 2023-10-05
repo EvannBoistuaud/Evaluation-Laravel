@@ -12,7 +12,7 @@ class ReservController extends Controller
      */
     public function index()
     {
-        //
+        return view('reserv.index');
     }
 
     /**

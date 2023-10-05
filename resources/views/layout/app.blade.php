@@ -18,8 +18,7 @@
     <nav class="pb-5">
       <a href="{{ route('salle.index') }}">Listes des salles</a>
       <a href="{{ route('client.index') }}">Listes des clients</a>
-      <a href="{{ route('reserv.index') }}">Listes des reservations</a>
-      <form method="POST" action="{{ route('logout') }}">
+      <a href="{{ route('reservation.index') }}">Listes des reservations</a>
         @csrf
 
 

@@ -10,9 +10,11 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Client $client)
+    public function index()
     {
-        return view('client.index', compact('client'));
+        $clients = Client::all();
+
+        return view('client.index', compact('clients'));
     }
 
     /**
@@ -20,7 +22,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('client.create');
     }
 
     /**
@@ -28,7 +30,8 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        return redirect()->route('client.index');
     }
 
     /**
@@ -44,7 +47,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return view('client.edit', compact('client'));
     }
 
     /**

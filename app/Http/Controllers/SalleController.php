@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Salle;
 use Illuminate\Http\Request;
+use App\Repositories\SalleRepository;
 
 class SalleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    private $repository;
     public function index()
     {
-        //
+        $salles = Salle::all();
+
+        return view('salle.index', compact('salles'));
     }
 
     /**
@@ -20,7 +24,7 @@ class SalleController extends Controller
      */
     public function create()
     {
-        //
+        return view('salle.create');
     }
 
     /**
@@ -28,7 +32,8 @@ class SalleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $salle=$this->repository->store($request->all());
+        return redirect()->route('salle.index');
     }
 
     /**
@@ -44,7 +49,7 @@ class SalleController extends Controller
      */
     public function edit(Salle $salle)
     {
-        //
+        return view('salle.edit', compact('salle'));
     }
 
     /**
@@ -52,7 +57,9 @@ class SalleController extends Controller
      */
     public function update(Request $request, Salle $salle)
     {
-        //
+        $this->repository->update($salle, $request->all());
+
+        return redirect()->route('salle.index');
     }
 
     /**
@@ -61,5 +68,9 @@ class SalleController extends Controller
     public function destroy(Salle $salle)
     {
         //
+    }
+    public function __construct(SalleRepository $repository)
+    {
+        $this->repository = $repository;
     }
 }
