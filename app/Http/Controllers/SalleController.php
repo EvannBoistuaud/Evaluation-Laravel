@@ -41,7 +41,6 @@ class SalleController extends Controller
      */
     public function show(Salle $salle)
     {
-        //
     }
 
     /**
@@ -65,9 +64,11 @@ class SalleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Salle $salle)
+    public function destroy($id)
     {
-        //
+        $salle = Salle::find($id);
+        $salle->delete();
+        return redirect()->route('salle.index');
     }
     public function __construct(SalleRepository $repository)
     {

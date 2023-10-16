@@ -3,16 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reserv;
+use App\Models\Salle;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Repositories\ReservRepository;
 
 class ReservController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    private $repository;
     public function index()
     {
-        return view('reserv.index');
+        $reservs = Reserv::all();
+
+        return view('reserv.index', compact('reservs'));
     }
 
     /**
@@ -20,7 +26,10 @@ class ReservController extends Controller
      */
     public function create()
     {
-        //
+        $salles = Salle::all();
+        $clients = Client::all();
+
+        return view('reserv.create', compact('salles','clients'));
     }
 
     /**
@@ -28,7 +37,8 @@ class ReservController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->repository->store($request->all());
+        return redirect()->route('reserv.index');
     }
 
     /**
@@ -44,7 +54,10 @@ class ReservController extends Controller
      */
     public function edit(Reserv $reserv)
     {
-        //
+        $salles = Salle::all();
+        $clients = Client::all();
+
+        return view('reserv.edit', compact('reserv', 'salles', 'clients' ));
     }
 
     /**
@@ -52,14 +65,23 @@ class ReservController extends Controller
      */
     public function update(Request $request, Reserv $reserv)
     {
-        //
+        $this->repository->update($reserv, $request->all());
+
+        return redirect()->route('reserv.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reserv $reserv)
+    public function destroy($id)
     {
-        //
+        $reserv = Reserv::find($id);
+        $reserv->delete();
+        return redirect()->route('reserv.index');
+    }
+
+    public function __construct(ReservRepository $repository)
+    {
+        $this->repository = $repository;
     }
 }

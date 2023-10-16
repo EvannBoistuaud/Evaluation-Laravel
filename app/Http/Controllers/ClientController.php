@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Repositories\ClientRepository;
 
 class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    private $repository;
     public function index()
     {
         $clients = Client::all();
@@ -30,7 +32,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-
+        $client=$this->repository->store($request->all());
         return redirect()->route('client.index');
     }
 
@@ -55,14 +57,22 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $this->repository->update($client, $request->all());
+
+        return redirect()->route('client.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        //
+        $client = Client::find($id);
+        $client->delete();
+        return redirect()->route('client.index');
+    }
+    public function __construct(ClientRepository $repository)
+    {
+        $this->repository = $repository;
     }
 }
