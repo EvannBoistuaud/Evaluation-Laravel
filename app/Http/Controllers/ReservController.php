@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reserv;
 use App\Models\Salle;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Repositories\ReservRepository;
 use Auth;
@@ -18,10 +19,10 @@ class ReservController extends Controller
     public function index()
     {
 
-        $reservs = Reserv::all();
-
+        $id = Auth::user()->id;
         if (Auth::user()->can('reserv-index')) {
-        return view('reserv.index', compact('reservs'));
+            $reservs = Reserv::all()->where('client_id', $id);
+            return view('reserv.index', compact('reservs'));
         }
         abort(401);
     }
@@ -31,9 +32,12 @@ class ReservController extends Controller
      */
     public function create()
     {
-        $salles = Salle::all();
-        $clients = Client::all();
+
+        $id = Auth::user()->id;
         if (Auth::user()->can('reserv-index')) {
+
+            $salles = Salle::all();
+            $clients = Client::all()->where('id', $id);
         return view('reserv.create', compact('salles','clients'));
         }
         abort(401);

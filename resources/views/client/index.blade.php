@@ -1,11 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    @auth
 
-        <a href="{{ route('client.create') }}" class="btn btn-primary">Ajouter</a>
-
-    @endauth
     <ul>
 
         @forelse ($clients as $client)

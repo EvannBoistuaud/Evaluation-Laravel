@@ -40,12 +40,12 @@
     </div>
 
     <div>
-        <label for="client_id">Client</label>
-        <select name="client_id" id="client_id">
+        <label for="client">Client</label>
+
           @foreach ($clients as $client)
-          <option value="{{ $client->id }}">{{ $client->nom}} {{$client->prenom}}</option>
+          <input type="text" name="client" id="client" required readonly value="{{ $client->nom}} {{$client->prenom}}"
           @endforeach
-        </select>
+
     </div>
 
     <div>

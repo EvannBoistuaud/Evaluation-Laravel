@@ -18,7 +18,7 @@ class ClientController extends Controller
 
         $id = Auth::user()->id;
         if (Auth::user()->can('client-index')) {
-            $clients = Client::find($id);
+            $clients = Client::all()->where('id', $id);
             return view('client.index', compact('clients'));
         }
         abort(401);

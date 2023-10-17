@@ -6,6 +6,7 @@ use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\SalleController;
 use App\Http\Controllers\ReservController;
+use App\Http\Controllers\LanguageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ Route::resource('client', ClientController::class);
 Route::resource('salle', SalleController::class);
 Route::resource('reserv', ReservController::class);
 Route::delete('salle/{id}',[SalleController::class,'destroy'])->name('salle.destroy');
+Route::get('language/{code_iso}', [LanguageController::class, 'change'])->name('language.change');
 
 
 require __DIR__.'/auth.php';

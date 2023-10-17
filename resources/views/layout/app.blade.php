@@ -39,19 +39,24 @@
         @auth
     <nav class="pb-5">
         @can('salle-index')
-      <a href="{{ route('salle.index') }}">Listes des salles</a>
+      <a style="background-color:#eae0c2; border-radius:28px; border:1px solid #333029; display:inline-block; cursor:pointer; color:#505739; font-family:Arial; font-size:17px; padding:10px 15px; text-decoration:none; text-shadow:0px 1px 0px #ffffff; :hover:background-color:#ccc2a6;" href="{{ route('salle.index') }}">{{__('Room List')}}</a>
       @endcan
       @can('client-index')
-      <a href="{{ route('client.index') }}">Listes des clients</a>
+      <a style="background-color:#eae0c2; border-radius:28px; border:1px solid #333029; display:inline-block; cursor:pointer; color:#505739; font-family:Arial; font-size:17px; padding:10px 15px; text-decoration:none; text-shadow:0px 1px 0px #ffffff;" href="{{ route('client.index') }}">{{__('Customer Area')}}</a>
       @endcan
       @can('reserv-index')
-      <a href="{{ route('reserv.index') }}">Listes des reservations</a>
+      <a style="background-color:#eae0c2; border-radius:28px; border:1px solid #333029; display:inline-block; cursor:pointer; color:#505739; font-family:Arial; font-size:17px; padding:10px 15px; text-decoration:none; text-shadow:0px 1px 0px #ffffff;" href="{{ route('reserv.index') }}">{{__('Your Reservations')}}</a>
       @endcan
-      <a href="/">Menu Principal</a>
+      <a style="background-color:#eae0c2; border-radius:28px; border:1px solid #333029; display:inline-block; cursor:pointer; color:#505739; font-family:Arial; font-size:17px; padding:10px 15px; text-decoration:none; text-shadow:0px 1px 0px #ffffff;" href="/">{{__("Main Menu")}}</a>
         @csrf
 
 
     </form>
+    <div>
+        {{ __('Vous naviguez en') }} [{{ session('locale') }}] [{{ App::getLocale() }}]
+        <a href="{{ route('language.change', ['code_iso' => 'fr']) }}">{{ __('French') }}</a>
+        <a href="{{ route('language.change', ['code_iso' => 'en']) }}">{{ __('English') }}</a>
+      </div>
     </nav>
 
     @endauth

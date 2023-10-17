@@ -31,9 +31,5 @@ class Client extends Model
 {
     use HasFactory;
 
-    function reservation_client()
-    {
-        $id = Auth::id();
-        return $id;
-    }
+
 }

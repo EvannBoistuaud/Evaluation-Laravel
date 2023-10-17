@@ -3,7 +3,7 @@
 @section('content')
 @can('salle-create')
 
-        <a href="{{ route('salle.create') }}" class="btn btn-primary">Ajouter</a>
+        <a href="{{ route('salle.create') }}" class="btn btn-primary">{{__("Add")}}</a>
 
         @endcan
     <ul>
@@ -11,18 +11,18 @@
             <li>
                 <div class="mb-2" >
                     <form action="{{route('salle.destroy', $salle->id)}}" method="post" >
-                    <b>Nom: </b>{{ $salle->nom_salle }} <b>Adresse: </b>{{ $salle->adresse }} <b>Nombre de place: </b> {{$salle->nombre_place}}
+                    <b>{{__("Name")}}: </b>{{ $salle->nom_salle }} <b>{{__("Address")}}: </b>{{ $salle->adresse }} <b>{{__("Places Number")}}: </b> {{$salle->nombre_place}}
 
                     @auth
                                             @can('salle-update')
                         <a href="{{ route('salle.edit', ['salle' => $salle->id]) }}"
-                            class="btn btn-sm btn-warning" ">Modifier</a>
+                            class="btn btn-sm btn-warning" ">{{__("Edit")}}</a>
                     @endcan
 
                         @csrf
                         @method('delete')
                     @can('salle-destroy')
-                        <input type="submit" class="btn btn-sm btn-warning" value="Supprimer" />
+                        <input type="submit" class="btn btn-sm btn-warning" value="{{__("Delete")}}" />
                     @endcan
 
                     @endauth
