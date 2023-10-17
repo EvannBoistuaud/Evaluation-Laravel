@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccueilController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\SalleController;
+use App\Http\Controllers\ReservController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AccueilController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,8 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-Route::get('/', [AccueilController::class, 'index']);
 
 Route::resource('client', ClientController::class);
 Route::resource('salle', SalleController::class);

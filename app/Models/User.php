@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable
 {
+    use HasRolesAndAbilities;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -43,3 +45,4 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 }
+

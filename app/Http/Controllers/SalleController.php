@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Salle;
 use Illuminate\Http\Request;
 use App\Repositories\SalleRepository;
+use Auth;
+use App\Repositories\SalleRequest;
 
 class SalleController extends Controller
 {
@@ -12,11 +14,20 @@ class SalleController extends Controller
      * Display a listing of the resource.
      */
     private $repository;
+
+    public function __construct(SalleRepository $repository)
+    {
+        $this->repository = $repository;
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     public function index()
     {
         $salles = Salle::all();
-
+        if (Auth::user()->can('matiere-index')) {
         return view('salle.index', compact('salles'));
+        }
+        abort(401);
     }
 
     /**
@@ -70,8 +81,5 @@ class SalleController extends Controller
         $salle->delete();
         return redirect()->route('salle.index');
     }
-    public function __construct(SalleRepository $repository)
-    {
-        $this->repository = $repository;
-    }
+
 }
