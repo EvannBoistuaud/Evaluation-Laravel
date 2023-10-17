@@ -7,6 +7,7 @@ use App\Models\Salle;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Repositories\ReservRepository;
+use Auth;
 
 class ReservController extends Controller
 {
@@ -16,9 +17,13 @@ class ReservController extends Controller
     private $repository;
     public function index()
     {
+
         $reservs = Reserv::all();
 
+        if (Auth::user()->can('reserv-index')) {
         return view('reserv.index', compact('reservs'));
+        }
+        abort(401);
     }
 
     /**
@@ -28,8 +33,10 @@ class ReservController extends Controller
     {
         $salles = Salle::all();
         $clients = Client::all();
-
+        if (Auth::user()->can('reserv-index')) {
         return view('reserv.create', compact('salles','clients'));
+        }
+        abort(401);
     }
 
     /**
@@ -57,7 +64,11 @@ class ReservController extends Controller
         $salles = Salle::all();
         $clients = Client::all();
 
+        if (Auth::user()->can('reserv-index')) {
         return view('reserv.edit', compact('reserv', 'salles', 'clients' ));
+        }
+        abort(401);
+
     }
 
     /**

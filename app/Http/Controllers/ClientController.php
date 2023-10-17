@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Repositories\ClientRepository;
+use Auth;
 
 class ClientController extends Controller
 {
@@ -14,9 +15,13 @@ class ClientController extends Controller
     private $repository;
     public function index()
     {
-        $clients = Client::all();
 
-        return view('client.index', compact('clients'));
+        $id = Auth::user()->id;
+        if (Auth::user()->can('client-index')) {
+            $clients = Client::find($id);
+            return view('client.index', compact('clients'));
+        }
+        abort(401);
     }
 
     /**
@@ -24,7 +29,10 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('client.create');
+        if (Auth::user()->can('client-index')) {
+            return view('client.create');
+        }
+        abort(401);
     }
 
     /**
@@ -32,7 +40,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $client=$this->repository->store($request->all());
+        $client = $this->repository->store($request->all());
         return redirect()->route('client.index');
     }
 
@@ -49,7 +57,10 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        return view('client.edit', compact('client'));
+        if (Auth::user()->can('client-index')) {
+            return view('client.edit', compact('client'));
+        }
+        abort(401);
     }
 
     /**

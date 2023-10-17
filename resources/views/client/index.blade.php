@@ -7,11 +7,12 @@
 
     @endauth
     <ul>
+
         @forelse ($clients as $client)
             <li>
                 <div class="mb-2">
                     <form action="{{ route('client.destroy', $client->id) }}" method="post">
-                        <b>Nom: </b>{{ $client->nom }} {{ $client->prenom }} <b>Adresse Mail: </b> {{ $client->email }}
+                        <b>Nom: </b>{{ $client->nom }} {{ $client->prenom }} <b>Adresse Mail: </b> {{ $client->email }} {{$client->id}}
 
                         @auth
 

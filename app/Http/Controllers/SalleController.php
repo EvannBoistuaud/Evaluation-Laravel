@@ -24,9 +24,10 @@ class SalleController extends Controller
     public function index()
     {
         $salles = Salle::all();
-        if (Auth::user()->can('matiere-index')) {
+        if (Auth::user()->can('salle-index')) {
         return view('salle.index', compact('salles'));
         }
+
         abort(401);
     }
 
@@ -35,7 +36,11 @@ class SalleController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->can('salle-index')) {
         return view('salle.create');
+        }
+
+        abort(401);
     }
 
     /**
@@ -59,7 +64,11 @@ class SalleController extends Controller
      */
     public function edit(Salle $salle)
     {
+        if (Auth::user()->can('salle-index')) {
         return view('salle.edit', compact('salle'));
+        }
+
+        abort(401);
     }
 
     /**
