@@ -31,7 +31,7 @@
             </li>
         @empty
             <li>
-                Aucune matière connue
+                {{__("No Room Known")}}
             </li>
         @endforelse
     </ul>

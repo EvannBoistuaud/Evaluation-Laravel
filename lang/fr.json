@@ -82,5 +82,18 @@
     "Edit": "Modifier",
     "Delete": "Supprimer",
     "Address": "Adresse",
-    "Places Number": "Nombre de places"
+    "Places Number": "Nombre de places",
+    "No Room Known": "Aucune Salle Connue",
+    "Submit": "Valider",
+    "Update": "Modification",
+    "Create": "Create",
+    "No Reservation Known": "Aucune Réservations Connue",
+    "Reservation's Number": "Numéro de reservation",
+    "Reservation's Date": "Date de Reservation",
+    "Reservation's Hour": "Heure de Reservation",
+    "Price": "Prix",
+    "Number of Seat": "Nombre de Place",
+    "Customer": "Client",
+    "First Name": "Prénom",
+    "Last Name": "Nom"
 }

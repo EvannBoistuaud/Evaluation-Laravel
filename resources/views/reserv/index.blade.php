@@ -2,7 +2,7 @@
 
 @section('content')
     @auth
-        <a href="{{ route('reserv.create') }}" class="btn btn-primary">Ajouter</a>
+        <a href="{{ route('reserv.create') }}" class="btn btn-primary">{{__("Add")}}</a>
     @endauth
 
     <ul>
@@ -11,24 +11,24 @@
                 <div class="mb-2">
                     <form action="{{ route('reserv.destroy', $reserv->id) }}" method="post">
 
-                        <b>N°Reservation: </b>{{ $reserv->numero }} <b>Date: </b> {{ $reserv->date_reservation }}
-                        <b>Heure: </b> {{ $reserv->heure_reservation }} <b>Prix: </b> {{ $reserv->prix }}€
-                        <b>Nombre de place: </b> {{ $reserv->nombre_place }}
-                        <b>Client: </b> {{ $reserv->client->nom }} {{ $reserv->client->prenom }}
-                        <b>Salle: </b> {{ $reserv->salle->nom_salle }}
+                        <b>{{__("Reservation's Number")}}: </b>{{ $reserv->numero }} <b>{{__("Reservation's Date")}}: </b> {{ $reserv->date_reservation }}
+                        <b>{{__("Reservation's Hour")}}: </b> {{ $reserv->heure_reservation }} <b>{{__("Price")}}: </b> {{ $reserv->prix }}€
+                        <b>{{__("Number of Seat")}}: </b> {{ $reserv->nombre_place }}
+                        <b>{{__("Customer")}}: </b> {{ $reserv->client->nom }} {{ $reserv->client->prenom }}
+                        <b>{{__("Room")}}: </b> {{ $reserv->salle->nom_salle }}
 
                         @auth
 
                             @cannot('reserv-update')
                                 <a href="{{ route('reserv.edit', ['reserv' => $reserv->id]) }}"
-                                    class="btn btn-sm btn-warning">Modifier</a>
+                                    class="btn btn-sm btn-warning">{{__("Update")}}</a>
                             @endcannot
 
                             @csrf
                             @method('delete')
 
                             @cannot('reserv-destroy')
-                                <input type="submit" class="btn btn-sm btn-warning" value="Supprimer" />
+                                <input type="submit" class="btn btn-sm btn-warning" value="{{__("Delete")}}" />
                             @endcannot
 
                         @endauth
@@ -37,7 +37,7 @@
             </li>
         @empty
             <li>
-                Aucune reservation connue
+                {{__("No Reservation Known")}}
             </li>
         @endforelse
     </ul>

@@ -82,5 +82,18 @@
     "Edit": "Edit",
     "Delete": "Delete",
     "Address": "Address",
-    "Places Number": "Places Number"
+    "Places Number": "Places Number",
+    "No Room Known": "No Room Known",
+    "Submit": "Submit",
+    "Update": "Update",
+    "Create": "Create",
+    "No Reservation Known": "No Reservation Known",
+    "Reservation's Number": "Reservation's Number",
+    "Reservation's Date": "Reservation's Date",
+    "Reservation's Hour": "Reservation's Hour",
+    "Price": "Price",
+    "Number of Seat": "Number of Seat",
+    "Customer": "Customer",
+    "First Name": "First Name",
+    "Last Name": "Last Name"
 }
