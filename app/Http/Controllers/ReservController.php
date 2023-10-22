@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReservRequest;
 use App\Models\Reserv;
 use App\Models\Salle;
 use App\Models\Client;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Repositories\ReservRepository;
 use Auth;
 
@@ -46,7 +46,7 @@ class ReservController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ReservRequest $request)
     {
         $this->repository->store($request->all());
         return redirect()->route('reserv.index');
@@ -78,7 +78,7 @@ class ReservController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Reserv $reserv)
+    public function update(ReservRequest $request, Reserv $reserv)
     {
         $this->repository->update($reserv, $request->all());
 

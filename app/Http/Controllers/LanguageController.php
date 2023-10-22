@@ -14,4 +14,5 @@ class LanguageController extends Controller
 
         return back();
     }
+
 }
