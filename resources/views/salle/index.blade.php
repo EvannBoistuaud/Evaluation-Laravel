@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-@can('salle-create')
+@can('salle-index')
 
         <a href="{{ route('salle.create') }}" class="btn btn-primary">{{__("Add")}}</a>
 
@@ -14,14 +14,14 @@
                     <b>{{__("Name")}}: </b>{{ $salle->nom_salle }} <b>{{__("Address")}}: </b>{{ $salle->adresse }} <b>{{__("Places Number")}}: </b> {{$salle->nombre_place}}
 
                     @auth
-                                            @can('salle-update')
+                                            @can('salle-index')
                         <a href="{{ route('salle.edit', ['salle' => $salle->id]) }}"
                             class="btn btn-sm btn-warning" ">{{__("Edit")}}</a>
                     @endcan
 
                         @csrf
                         @method('delete')
-                    @can('salle-destroy')
+                    @can('salle-index')
                         <input type="submit" class="btn btn-sm btn-warning" value="{{__("Delete")}}" />
                     @endcan
 

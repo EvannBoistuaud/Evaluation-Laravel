@@ -19,17 +19,17 @@
 
                         @auth
 
-                            @cannot('reserv-update')
+                            @can('reserv-index')
                                 <a href="{{ route('reserv.edit', ['reserv' => $reserv->id]) }}"
                                     class="btn btn-sm btn-warning">{{__("Update")}}</a>
-                            @endcannot
+                            @endcan
 
                             @csrf
                             @method('delete')
 
-                            @cannot('reserv-destroy')
+                            @can('reserv-index')
                                 <input type="submit" class="btn btn-sm btn-warning" value="{{__("Delete")}}" />
-                            @endcannot
+                            @endcan
 
                         @endauth
                     </form>

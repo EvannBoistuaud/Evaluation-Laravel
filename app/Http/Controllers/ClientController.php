@@ -40,7 +40,7 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
-        $client = $this->repository->store($request->all());
+        $this->repository->store($request->all());
         return redirect()->route('client.index');
     }
 

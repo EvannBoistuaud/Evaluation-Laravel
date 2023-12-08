@@ -47,7 +47,7 @@ class SalleController extends Controller
      */
     public function store(SalleRequest $request)
     {
-        $salle=$this->repository->store($request->all());
+        $this->repository->store($request->all());
         return redirect()->route('salle.index');
     }
 

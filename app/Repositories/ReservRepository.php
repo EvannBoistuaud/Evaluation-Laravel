@@ -14,6 +14,7 @@ private function save(Reserv $reserv, array $inputs) {
     $reserv->prix = $inputs['prix'];
     $reserv->nombre_place = $inputs['nombre_place'];
     $reserv->salle_id = $inputs['salle_id'];
+    $reserv->client_id = $inputs['client_id'];
 
 $reserv->save();
 return $reserv;

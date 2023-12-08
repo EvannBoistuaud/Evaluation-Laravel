@@ -15,7 +15,7 @@ class ClientRequest extends FormRequest
         $user = Auth::user();
 
         return Auth::check() &&
-            ($user->isA('admin') || $user->can('client-index'));
+            $user->can('client-index');
     }
 
     /**
@@ -26,6 +26,7 @@ class ClientRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id_user' => 'required|bigint',
             'nom' => 'required|string|max:75',
             'prenom' => 'required|string|max:75',
             'email' => 'required|string|max:75'

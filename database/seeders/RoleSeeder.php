@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Silber\Bouncer\Bouncer;
 
 class RoleSeeder extends Seeder
 {

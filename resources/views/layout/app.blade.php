@@ -53,7 +53,7 @@
 
     </form>
     <div>
-        {{ __('Vous naviguez en') }} [{{ session('locale') }}] [{{ App::getLocale() }}]
+        {{ __('Vous naviguez en') }} [{{ App::getLocale() }}]
         <a href="{{ route('language.change', ['code_iso' => 'fr']) }}">{{ __('French') }}</a>
         <a href="{{ route('language.change', ['code_iso' => 'en']) }}">{{ __('English') }}</a>
       </div>

@@ -3,7 +3,9 @@
 @section('content')
 
     <ul>
-
+        @auth
+        <a href="{{ route('client.create') }}" class="btn btn-primary">{{__("Add")}}</a>
+    @endauth
         @forelse ($clients as $client)
             <li>
                 <div class="mb-2">
@@ -12,7 +14,7 @@
 
                         @auth
 
-                            @cannot('client-update')
+                            @cannot('client-index')
                                 <a href="{{ route('client.edit', ['client' => $client->id]) }}"
                                     class="btn btn-sm btn-warning">{{__("Update")}}</a>
                             @endcannot
@@ -20,7 +22,7 @@
                             @csrf
                             @method('delete')
 
-                            @cannot('client-destroy')
+                            @cannot('client-index')
                                 <input type="submit" class="btn btn-sm btn-warning" value="{{__("Delete")}}" />
                             @endcannot
 

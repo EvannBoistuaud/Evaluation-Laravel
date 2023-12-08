@@ -15,7 +15,7 @@ class SalleRequest extends FormRequest
         $user = Auth::user();
 
         return Auth::check() &&
-            ($user->isA('user') || $user->can('reserv-index'));
+            ($user->isA('admin') || $user->can('salle-index'));
     }
 
     /**

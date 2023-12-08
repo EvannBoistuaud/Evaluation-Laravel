@@ -7,33 +7,14 @@
     @csrf
     @method('put')
 
-    <div>
-      <label for="nom_salle">{{__("Name")}}</label>
-      <input type="text" name="nom_salle" id="nom_salle" required maxlength="150" value="{{ old('nom_salle', $salle->nom_salle) }}">
-    </div>
-    @error('nom')
-      <p class="text-danger">{{ $message }}</p>
-    @enderror
+    <x-input property="nom_salle" type="text" label="Name" :model="$salle"/>
 
-    <div>
-      <label for="adresse">{{__("Address")}}</label>
-      <input type="text" name="adresse" id="adresse" required maxlength="150" value="{{ old('adresse', $salle->adresse) }}">
-    </div>
-    @error('adresse')
-      <p class="text-danger">{{ $message }}</p>
-    @enderror
+    <x-input property="adresse" type="text" label="Address" :model="$salle"/>
 
-    <div>
-      <label for="nombre_place">{{__("Places Number")}}</label>
-      <input type="number" name="nombre_place" id="nombre_place" required value="{{ old('nombre_place', $salle->nombre_place) }}">
-    </div>
-    @error('email')
-      <p class="text-danger">{{ $message }}</p>
-    @enderror
+    <x-input property="nombre_place" type="number" label="Places Number" :model="$salle"/>
 
-    <div>
-      <input type="submit" value="{{__("Submit")}}" class="btn btn-success">
-    </div>
+
+    <x-input-submit/>
 
   </form>
 @endsection

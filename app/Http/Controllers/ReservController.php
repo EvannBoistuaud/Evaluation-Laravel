@@ -9,6 +9,8 @@ use App\Models\Client;
 use App\Models\User;
 use App\Repositories\ReservRepository;
 use Auth;
+use App\Mail\ReservMail;
+use Mail;
 
 class ReservController extends Controller
 {
@@ -38,7 +40,7 @@ class ReservController extends Controller
 
             $salles = Salle::all();
             $clients = Client::all()->where('id', $id);
-        return view('reserv.create', compact('salles','clients'));
+        return view('reserv.create', compact('salles','clients','id'));
         }
         abort(401);
     }
@@ -48,7 +50,12 @@ class ReservController extends Controller
      */
     public function store(ReservRequest $request)
     {
-        $this->repository->store($request->all());
+        dd($request->all());
+       $reserv = $this->repository->store($request->all());
+
+        $mail = Auth::user()->email;
+        Mail::to($mail)->send(new ReservMail($reserv));
+
         return redirect()->route('reserv.index');
     }
 

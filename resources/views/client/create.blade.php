@@ -6,24 +6,13 @@
 
     @csrf
 
-    <div>
-      <label for="nom">Nom</label>
-      <input type="text" name="nom" id="nom" required value="{{ old('nom') }}" maxlength="75">
-    </div>
+    <x-input property="nom" type="text" label="Last Name" />
 
-    <div>
-      <label for="prenom">Prénom</label>
-      <input type="text" name="prenom" id="prenom" required value="{{ old('prenom') }}" maxlength="75">
-    </div>
+    <x-input property="prenom" type="text" label="First Name" />
 
-    <div>
-      <label for="email">Adresse Email</label>
-      <input type="email" name="email" id="email" required value="{{ old('email') }}">
-    </div>
+    <x-input property="email" type="email" label="Email" />
 
-    <div>
-      <input type="submit" value="Valider" class="btn btn-success">
-    </div>
+    <x-input-submit/>
 
   </form>
 @endsection
