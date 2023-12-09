@@ -6,6 +6,7 @@ use App\Http\Requests\ClientRequest;
 use App\Models\Client;
 use App\Repositories\ClientRepository;
 use Auth;
+use Illuminate\Cache\Repository;
 
 class ClientController extends Controller
 {
@@ -13,14 +14,20 @@ class ClientController extends Controller
      * Display a listing of the resource.
      */
     private $repository;
+
     public function index()
     {
-
+        // Récupère l'id de la personne authentifié
         $id = Auth::user()->id;
+
+        // Si la personne authentifié possède les bonnes autorisation...
         if (Auth::user()->can('client-index')) {
-            $clients = Client::all()->where('id', $id);
+            // ... Alors récupérer le client ayant la même id_user que l'utilisateur connécté
+            // Et rediriger vers client.index avec la valeur $client
+            $clients = Client::all()->where('id_user', $id);
             return view('client.index', compact('clients'));
         }
+        // Sinon renvoyer une erreur
         abort(401);
     }
 
@@ -29,9 +36,12 @@ class ClientController extends Controller
      */
     public function create()
     {
+         // Si la personne authentifié possède les bonnes autorisation...
         if (Auth::user()->can('client-index')) {
+            // ... Alors renvoyer a la page client.create
             return view('client.create');
         }
+        //Sinon renvoyer une erreur
         abort(401);
     }
 
@@ -40,6 +50,7 @@ class ClientController extends Controller
      */
     public function store(ClientRequest $request)
     {
+        //Enregistre les valeurs récupérées dans la database avant de rediriger vers client.index
         $this->repository->store($request->all());
         return redirect()->route('client.index');
     }
@@ -57,7 +68,9 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
+         // Si la personne authentifié possède les bonnes autorisation...
         if (Auth::user()->can('client-index')) {
+            //... Alors renvoyer vers client.edit avec $client
             return view('client.edit', compact('client'));
         }
         abort(401);
@@ -68,6 +81,7 @@ class ClientController extends Controller
      */
     public function update(ClientRequest $request, Client $client)
     {
+        // Enregistrer la valeur obtenue dans la database avant de rediriger vers client.index
         $this->repository->update($client, $request->all());
 
         return redirect()->route('client.index');
@@ -78,6 +92,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
+        // Récupère le client avec le bon id avant de le supprimer et de rediriger vers la page client.index
         $client = Client::find($id);
         $client->delete();
         return redirect()->route('client.index');

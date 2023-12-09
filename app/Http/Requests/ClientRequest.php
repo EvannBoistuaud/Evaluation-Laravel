@@ -26,7 +26,7 @@ class ClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_user' => 'required|bigint',
+            'id_user' => 'required|integer',
             'nom' => 'required|string|max:75',
             'prenom' => 'required|string|max:75',
             'email' => 'required|string|max:75'

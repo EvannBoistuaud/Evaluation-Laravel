@@ -20,7 +20,7 @@
 
 
     <div>
-          <input type="hidden" name="client_id" id="client_id" required readonly value="{{ $id }}"/>
+          <input type="hidden" name="client_id" id="client_id" required readonly value="{{ $clients }}"/>
     </div>
 
 

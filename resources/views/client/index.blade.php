@@ -10,21 +10,21 @@
             <li>
                 <div class="mb-2">
                     <form action="{{ route('client.destroy', $client->id) }}" method="post">
-                        <b>{{__("Name")}}: </b>{{ $client->nom }} {{ $client->prenom }} <b>{{__("Email")}}: </b> {{ $client->email }} {{$client->id}}
+                        <b>{{__("Name")}}: </b>{{ $client->nom }} {{ $client->prenom }} <b>{{__("Email")}}: </b> {{ $client->email }}
 
                         @auth
 
-                            @cannot('client-index')
+                            @can('client-index')
                                 <a href="{{ route('client.edit', ['client' => $client->id]) }}"
                                     class="btn btn-sm btn-warning">{{__("Update")}}</a>
-                            @endcannot
+                            @endcan
 
                             @csrf
                             @method('delete')
 
-                            @cannot('client-index')
+                            @can('client-index')
                                 <input type="submit" class="btn btn-sm btn-warning" value="{{__("Delete")}}" />
-                            @endcannot
+                            @endcan
 
                         @endauth
                     </form>

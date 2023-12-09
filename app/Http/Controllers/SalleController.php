@@ -22,11 +22,15 @@ class SalleController extends Controller
 
     public function index()
     {
+        //Récupérer toute les salles
         $salles = Salle::all();
+
+         // Si la personne authentifié possède les bonnes autorisation...
         if (Auth::user()->can('salle-index')) {
+        // ... Alors rediriger vers salle.index
         return view('salle.index', compact('salles'));
         }
-
+        //Sinon renvoyer une erreur
         abort(401);
     }
 
@@ -35,10 +39,12 @@ class SalleController extends Controller
      */
     public function create()
     {
+         // Si la personne authentifié possède les bonnes autorisation...
         if (Auth::user()->can('salle-index')) {
+        // ... Alors renvoyer vers salle.create
         return view('salle.create');
         }
-
+        // Sinon renvoyer une erreur
         abort(401);
     }
 
@@ -47,6 +53,7 @@ class SalleController extends Controller
      */
     public function store(SalleRequest $request)
     {
+        // Sauvegarder les valeurs récupérées dans la base de données avant de rediriger vers salle.index
         $this->repository->store($request->all());
         return redirect()->route('salle.index');
     }
@@ -63,10 +70,12 @@ class SalleController extends Controller
      */
     public function edit(Salle $salle)
     {
+         // Si la personne authentifié possède les bonnes autorisation...
         if (Auth::user()->can('salle-index')) {
+        // ... Alors rediriger vers salle.edit
         return view('salle.edit', compact('salle'));
         }
-
+        // Sinon renvoyer une erreur
         abort(401);
     }
 
@@ -75,6 +84,7 @@ class SalleController extends Controller
      */
     public function update(SalleRequest $request, Salle $salle)
     {
+        //Sauvegarder les valeurs récupérées dans la base de donnée et rediriger vers salle.index
         $this->repository->update($salle, $request->all());
 
         return redirect()->route('salle.index');
@@ -85,6 +95,7 @@ class SalleController extends Controller
      */
     public function destroy($id)
     {
+        // Récupérer la bonne salle avant de la supprimer et rediriger vers salle.index
         $salle = Salle::find($id);
         $salle->delete();
         return redirect()->route('salle.index');

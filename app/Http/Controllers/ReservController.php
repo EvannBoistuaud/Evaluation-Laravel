@@ -20,12 +20,16 @@ class ReservController extends Controller
     private $repository;
     public function index()
     {
-
+        // Récupérer l'id de l'utilisateur connecté
         $id = Auth::user()->id;
+
+        //Si la personne connécté possède les bonnes autorisation...
         if (Auth::user()->can('reserv-index')) {
+            //... Alors renvoyer toute les réservation du client connecté et rediriger vers reserv.index
             $reservs = Reserv::all()->where('client_id', $id);
             return view('reserv.index', compact('reservs'));
         }
+        // Sinon renvoyer une erreur
         abort(401);
     }
 
@@ -34,14 +38,17 @@ class ReservController extends Controller
      */
     public function create()
     {
-
+        // Récupérer l'id de l'utilisateur connecté
         $id = Auth::user()->id;
-        if (Auth::user()->can('reserv-index')) {
 
+         // Si la personne authentifié possède les bonnes autorisation...
+        if (Auth::user()->can('reserv-index')) {
+            // ... Alors récuperer toute les salle et le client lier à l'utilisateur avant de renvoyer vers reserv.create
             $salles = Salle::all();
-            $clients = Client::all()->where('id', $id);
+            $clients = Client::where('id_user', $id)->get();
         return view('reserv.create', compact('salles','clients','id'));
         }
+        // Sinon renvoyer une erreur
         abort(401);
     }
 
@@ -50,12 +57,14 @@ class ReservController extends Controller
      */
     public function store(ReservRequest $request)
     {
-        dd($request->all());
+        // Sauvegarder les valeurs récupérées dans la base de donnée
        $reserv = $this->repository->store($request->all());
 
+        //Récupérer le mail de l'utilisateur connecté et lui envoyer un mail
         $mail = Auth::user()->email;
         Mail::to($mail)->send(new ReservMail($reserv));
 
+        //Rediriger vers reserv.index
         return redirect()->route('reserv.index');
     }
 
@@ -72,12 +81,16 @@ class ReservController extends Controller
      */
     public function edit(Reserv $reserv)
     {
+        //Recuperer toute les salles et clients
         $salles = Salle::all();
         $clients = Client::all();
 
+         // Si la personne authentifié possède les bonnes autorisation...
         if (Auth::user()->can('reserv-index')) {
+        // ... Alors renvoyer vers reserv.edit
         return view('reserv.edit', compact('reserv', 'salles', 'clients' ));
         }
+        //Sinon renvoyer une erreur
         abort(401);
 
     }
@@ -87,8 +100,10 @@ class ReservController extends Controller
      */
     public function update(ReservRequest $request, Reserv $reserv)
     {
+        // Sauvegarder les valeurs récupérées dans la base de donnée
         $this->repository->update($reserv, $request->all());
 
+        // Rediriger vers reserv.index
         return redirect()->route('reserv.index');
     }
 
@@ -97,6 +112,7 @@ class ReservController extends Controller
      */
     public function destroy($id)
     {
+        //Séléctionner la bonne reservation avant de la supprimer et de rediriger vers reserv.index
         $reserv = Reserv::find($id);
         $reserv->delete();
         return redirect()->route('reserv.index');
