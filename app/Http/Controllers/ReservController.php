@@ -9,7 +9,8 @@ use App\Models\Client;
 use App\Models\User;
 use App\Repositories\ReservRepository;
 use Auth;
-use App\Mail\ReservMail;
+use App\Mail\NewReservMail;
+use App\Mail\EditReservMail;
 use Mail;
 
 class ReservController extends Controller
@@ -62,7 +63,7 @@ class ReservController extends Controller
 
         //Récupérer le mail de l'utilisateur connecté et lui envoyer un mail
         $mail = Auth::user()->email;
-        Mail::to($mail)->send(new ReservMail($reserv));
+        Mail::to($mail)->send(new NewReservMail($reserv));
 
         //Rediriger vers reserv.index
         return redirect()->route('reserv.index');
@@ -102,6 +103,10 @@ class ReservController extends Controller
     {
         // Sauvegarder les valeurs récupérées dans la base de donnée
         $this->repository->update($reserv, $request->all());
+
+        // Récupère l'email de la personne connecté et lui envoie un mail pour confirmé la prise en compte
+        $mail = Auth::user()->email;
+        Mail::to($mail)->send(new EditReservMail($reserv));
 
         // Rediriger vers reserv.index
         return redirect()->route('reserv.index');

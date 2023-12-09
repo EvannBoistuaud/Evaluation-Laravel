@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewRegistrationMail;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\Client;
+use Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -57,6 +59,9 @@ class RegisteredUserController extends Controller
         ]);
 
         Auth::login($user);
+
+        $mail = Auth::user()->email;
+        Mail::to($mail)->send(new NewRegistrationMail($client));
 
         return redirect(RouteServiceProvider::HOME);
     }

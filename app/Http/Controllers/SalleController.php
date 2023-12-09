@@ -6,6 +6,10 @@ use App\Http\Requests\SalleRequest;
 use App\Models\Salle;
 use App\Repositories\SalleRepository;
 use Auth;
+use App\Mail\EditSalleMail;
+use App\Mail\NewSalleMail;
+use App\Mail\DeleteSalleMail;
+use Mail;
 
 class SalleController extends Controller
 {
@@ -54,7 +58,12 @@ class SalleController extends Controller
     public function store(SalleRequest $request)
     {
         // Sauvegarder les valeurs récupérées dans la base de données avant de rediriger vers salle.index
-        $this->repository->store($request->all());
+        $salle = $this->repository->store($request->all());
+
+        // Récupère le mail de la personne connectée et envoie un mail de confirmation
+        $mail = Auth::user()->email;
+        Mail::to($mail)->send(new NewSalleMail($salle));
+
         return redirect()->route('salle.index');
     }
 
@@ -85,7 +94,11 @@ class SalleController extends Controller
     public function update(SalleRequest $request, Salle $salle)
     {
         //Sauvegarder les valeurs récupérées dans la base de donnée et rediriger vers salle.index
-        $this->repository->update($salle, $request->all());
+        $salle = $this->repository->update($salle, $request->all());
+
+        // Récupère le mail de la personne connectée et envoie un mail de confirmation
+        $mail = Auth::user()->email;
+        Mail::to($mail)->send(new EditSalleMail($salle));
 
         return redirect()->route('salle.index');
     }
@@ -98,6 +111,11 @@ class SalleController extends Controller
         // Récupérer la bonne salle avant de la supprimer et rediriger vers salle.index
         $salle = Salle::find($id);
         $salle->delete();
+
+        // Récupère le mail de la personne connectée et envoie un mail de confirmation
+        $mail = Auth::user()->email;
+        Mail::to($mail)->send(new DeleteSalleMail($salle));
+
         return redirect()->route('salle.index');
     }
 

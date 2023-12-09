@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientRequest;
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Client;
+use App\Models\User;
 use App\Repositories\ClientRepository;
 use Auth;
 use Illuminate\Cache\Repository;
+use App\Mail\EditClientMail;
+use Mail;
 
 class ClientController extends Controller
 {
@@ -82,7 +86,11 @@ class ClientController extends Controller
     public function update(ClientRequest $request, Client $client)
     {
         // Enregistrer la valeur obtenue dans la database avant de rediriger vers client.index
-        $this->repository->update($client, $request->all());
+        $editclient = $this->repository->update($client, $request->all());
+
+         //Récupérer le mail de l'utilisateur connecté et lui envoyer un mail
+         $mail = Auth::user()->email;
+         Mail::to($mail)->send(new EditClientMail($editclient));
 
         return redirect()->route('client.index');
     }
