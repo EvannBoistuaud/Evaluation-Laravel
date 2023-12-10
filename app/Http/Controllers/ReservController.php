@@ -27,7 +27,9 @@ class ReservController extends Controller
         //Si la personne connécté possède les bonnes autorisation...
         if (Auth::user()->can('reserv-index')) {
             //... Alors renvoyer toute les réservation du client connecté et rediriger vers reserv.index
-            $reservs = Reserv::all()->where('client_id', $id);
+            $reservs = Reserv::whereHas('client', function ($query) use ($id) {
+                $query->where('id_user', $id);
+            })->get();
             return view('reserv.index', compact('reservs'));
         }
         // Sinon renvoyer une erreur
@@ -46,7 +48,7 @@ class ReservController extends Controller
         if (Auth::user()->can('reserv-index')) {
             // ... Alors récuperer toute les salle et le client lier à l'utilisateur avant de renvoyer vers reserv.create
             $salles = Salle::all();
-            $clients = Client::where('id_user', $id)->get();
+            $clients = Client::where('id_user', $id)->first();
         return view('reserv.create', compact('salles','clients','id'));
         }
         // Sinon renvoyer une erreur
@@ -82,9 +84,12 @@ class ReservController extends Controller
      */
     public function edit(Reserv $reserv)
     {
+        // Récupérer l'id de l'utilisateur connecté
+        $id = Auth::user()->id;
+
         //Recuperer toute les salles et clients
         $salles = Salle::all();
-        $clients = Client::all();
+        $clients = Client::where('id_user', $id)->first();
 
          // Si la personne authentifié possède les bonnes autorisation...
         if (Auth::user()->can('reserv-index')) {

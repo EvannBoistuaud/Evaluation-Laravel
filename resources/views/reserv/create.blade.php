@@ -1,6 +1,8 @@
 @extends('layout.app')
 
+
 @section('content')
+
   <h2>{{__("Create")}}</h2>
   <form action="{{ route('reserv.store') }}" method="post">
 
@@ -20,7 +22,7 @@
 
 
     <div>
-          <input type="hidden" name="client_id" id="client_id" required readonly value="{{ $clients }}"/>
+          <input type="hidden" name="client_id" id="client_id" required readonly value="{{ $clients->id }}"/>
     </div>
 
 

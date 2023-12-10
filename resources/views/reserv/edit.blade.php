@@ -22,7 +22,7 @@
     <x-select property="salle_id" label="Room" :collec="$salles" :model="$reserv" prop_name="nom_salle" />
 
     <div>
-        <input type="hidden" name="client_id" id="client_id" required readonly value="{{ auth()->user()->id }}"/>
+        <input type="hidden" name="client_id" id="client_id" required readonly value="{{ old($clients->id) }}"/>
     </div>
 
     <x-input-submit/>

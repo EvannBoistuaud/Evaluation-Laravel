@@ -4,7 +4,6 @@
     @auth
         <a href="{{ route('reserv.create') }}" class="btn btn-primary">{{__("Add")}}</a>
     @endauth
-
     <ul>
         @forelse ($reservs as $reserv)
             <li>
